@@ -1,11 +1,12 @@
 import Tablero from "../tablero/Tablero";
 import { useState } from "react";
 import useAlert from "../../services/alert/useAlert";
-import { colocarBarcoEnTablero } from "../../services/tablero/tablero.service";
 import { useGameContext } from "../../context/game/useGameContext";
+import useTableroService from "../../services/tablero/useTablero.service";
 
 export default function TableroJugador() {
-  const { selectedBarco, setBarcos, setSelectedBarco } = useGameContext();
+  const { selectedBarco } = useGameContext();
+  const { colocarBarcoEnTablero } =  useTableroService();
   const { sendAlert } = useAlert();
   const [tablero, setTablero] = useState(() => {
     const filas = Array(10).fill(null);
@@ -26,18 +27,15 @@ export default function TableroJugador() {
     return tableroInicial;
   });
 
-  const colocarBarco = (celdaInicio, horizontal, barco) => {
+  const colocarBarco = (celdaInicio, barco) => {
     try {
       const nuevoTablero = colocarBarcoEnTablero(
         tablero,
         celdaInicio,
-        horizontal,
         barco
       );
       setTablero(nuevoTablero);
       sendAlert("Se coloco corretamente", "success");
-      setBarcos((barcos) => [...barcos, barco]);
-      setSelectedBarco(null);
     } catch (error) {
       sendAlert(error.message, "error");
     }
@@ -46,7 +44,7 @@ export default function TableroJugador() {
   return (
     <Tablero
       tablero={tablero}
-      onClickCelda={(celda) => colocarBarco(celda, false, selectedBarco)}
+      onClickCelda={(celda) => colocarBarco(celda, selectedBarco)}
     />
   );
 }
