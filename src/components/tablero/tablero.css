@@ -1,0 +1,7 @@
+.tablero {
+  background-color: var(--bgColor);
+}
+
+.fila{
+  height: 2.3rem;
+}

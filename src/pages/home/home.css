@@ -1,0 +1,12 @@
+.home-page {
+  justify-content: center;
+  align-items: center;
+}
+
+.tableros-container {
+  height: 100vh;
+  background-color: var(--primaryMain);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
