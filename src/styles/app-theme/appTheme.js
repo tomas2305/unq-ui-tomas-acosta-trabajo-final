@@ -6,7 +6,7 @@ const AppTheme = createTheme({
     MuiCssBaseline: {
       styleOverrides: `
             body {
-              background-color: ${colors.backgroundColor};
+              background-color: ${colors.secondaryMain};
             }
 
             /* Handle */
@@ -37,7 +37,7 @@ const AppTheme = createTheme({
   typography: {
     allVariants: {
       color: colors.fontColor,
-      fontWeight: '700',
+      fontWeight: "700",
     },
     fontFamily: ["Roboto", "sans-serif"].join(","),
   },

@@ -1,12 +1,20 @@
 .celda {
   height: 2.3rem;
   width: 2.3rem;
-  cursor: pointer;
-  background-color: var(--bgColor);
   border: 1px solid var(--fontColor);
+  padding: 0;
 }
 
-.celda-select {
-  border: 1px solid var(--red);
-  background-color: var(--secondaryLight);
+.celda-disabled {
+  cursor: default;
+  background-color: rgb(215, 215, 215);
+}
+
+.celda-enabled {
+  cursor: pointer;
+  background-color: var(--bgColor);
+}
+
+.celda-enabled:hover {
+  border: 1px solid red;
 }

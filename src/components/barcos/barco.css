@@ -1,0 +1,20 @@
+.barco {
+  height: 100%;
+  width: 100%;
+}
+
+.portaaviones {
+  background-color: var(--portaaviones);
+}
+
+.crucero {
+  background-color: var(--crucero);
+}
+
+.submarino {
+  background-color: var(--submarino);
+}
+
+.lancha {
+  background-color: var(--lancha);
+}

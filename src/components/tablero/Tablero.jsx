@@ -3,15 +3,15 @@ import Celda from "../celda/Celda";
 
 export default function Tablero({ tablero, onClickCelda }) {
   return (
-    <div className="tablero">
+    <div className="tablero-container">
       <div className="tablero">
         {tablero.map((fila) => (
           <div key={fila.nroFila} className="fila">
             {fila.celdas.map((celda) => (
               <Celda
-                key={celda.nroCol}
+                key={`${celda.nroFila}-${celda.nroCol}`}
                 contenido={celda.contenido}
-                onClick={() => onClickCelda(fila.nroFila, celda.nroCol)}
+                onClick={() => onClickCelda(celda)}
               />
             ))}
           </div>

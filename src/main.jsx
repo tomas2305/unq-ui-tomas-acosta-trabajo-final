@@ -8,12 +8,18 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { AlertProvider } from "./context/alert/AlertContextProvider.jsx";
+import { GameProvider } from "./context/game/gameContextProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ThemeProvider theme={AppTheme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <GameProvider>
+      <AlertProvider>
+        <ThemeProvider theme={AppTheme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </AlertProvider>
+    </GameProvider>
   </React.StrictMode>
 );

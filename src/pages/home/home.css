@@ -3,10 +3,22 @@
   align-items: center;
 }
 
-.tableros-container {
+.game-container {
   height: 100vh;
   background-color: var(--primaryMain);
   display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.tableros-container {
+  width: 100%;
+  display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+.select-barcos {
+  padding: 0 5rem;
 }

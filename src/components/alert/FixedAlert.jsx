@@ -10,6 +10,7 @@ export default function FixedAlert({ open, setOpen, message, severity }) {
   return (
     <div>
       <Snackbar
+        anchorOrigin={{ horizontal: "left", vertical: "top" }}
         open={open}
         onClose={handleClose}
         TransitionComponent={Fade}

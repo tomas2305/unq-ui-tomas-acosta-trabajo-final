@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.buttons-container {
+  display: flex;
+  width: 23rem;
+  gap: 1rem;
+  padding: 1rem;
+  flex-wrap: wrap;
+  border-radius: 0.5rem;
+  border: 2px solid black;
+  background-color: white;
+}
