@@ -7,6 +7,10 @@ const colors = {
   secondaryMain: "#ffa214",
   secondaryDark: "#e07438",
   secondaryLight: "#ffc825",
+  portaaviones: "#ea323c",
+  crucero: "#7a09fa",
+  submarino: "#5ac54f",
+  lancha: "#db3ffd",
 };
 
 export default colors;

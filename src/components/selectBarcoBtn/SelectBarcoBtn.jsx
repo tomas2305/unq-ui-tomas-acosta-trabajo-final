@@ -19,6 +19,7 @@ export default function SelectBarcoBtn({ text, barco }) {
       size="small"
       onClick={() => setSelectedBarco(barco)}
       disabled={disabled}
+      sx={{ backgroundColor: barco.color }}
     >
       {text}
     </Button>
