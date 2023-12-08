@@ -2,7 +2,7 @@ import "./tablero.css";
 import Celda from "../celda/Celda";
 import { Typography } from "@mui/material";
 
-export default function Tablero({ tablero, onClickCelda }) {
+export default function Tablero({ tablero, onClickCelda, enabled }) {
   const letras = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 
   return (
@@ -29,6 +29,7 @@ export default function Tablero({ tablero, onClickCelda }) {
                 key={`${celda.nroFila}-${celda.nroCol}`}
                 contenido={celda.contenido}
                 onClick={() => onClickCelda(celda)}
+                enabled={enabled}
               />
             ))}
           </div>

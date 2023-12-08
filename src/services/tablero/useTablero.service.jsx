@@ -1,12 +1,27 @@
 import Barco from "../../components/barcos/Barco";
-import { useGameContext } from "../../context/game/useGameContext";
 
 export default function useTableroService() {
-  const { setBarcos, setSelectedBarco } = useGameContext();
-
   const colocarBarcoEnTablero = (tablero, celdaInicio, barco) => {
     const params = { tablero, celdaInicio, barco };
     validarCeldas(params);
+    return colocarBarco(params);
+  };
+
+  const colocarBarcosEnCeldasRandom = (tablero, barcos) => {
+    const barcosGirados = getRandomDireccionBarcos(barcos);
+    let newTablero = tablero;
+    barcosGirados.forEach((barco) => {
+      newTablero = colocarBarcoEnTableroEnCeldaRandom(newTablero, barco);
+      console.log(barco);
+    });
+    return newTablero;
+  };
+
+  const colocarBarcoEnTableroEnCeldaRandom = (tablero, barco) => {
+    const celdaInicio = getCeldaRandomDelTablero(tablero);
+    const params = { tablero, celdaInicio, barco };
+    validarCeldas(params);
+
     return colocarBarco(params);
   };
 
@@ -18,8 +33,6 @@ export default function useTableroService() {
     recorrerCeldas(params, (fila, columna) => {
       nuevoTablero[fila].celdas[columna].contenido = barco;
     });
-    setBarcos((barcos) => [...barcos, params.barco]);
-    setSelectedBarco(null);
 
     return nuevoTablero;
   };
@@ -27,8 +40,12 @@ export default function useTableroService() {
   const validarCeldas = (params) => {
     recorrerCeldas(params, (fila, columna) => {
       if (!params.tablero[fila]?.celdas[columna]) {
+        console.log(
+          "--------------ERROR FUERA DE RANGO!------------------------"
+        );
         throw new Error("Fuera de rango");
       } else if (params.tablero[fila].celdas[columna].contenido) {
+        console.log("--------------ERROR POSICION!------------------------");
         throw new Error("No se puede colocar el barco en esta posicion");
       }
     });
@@ -47,5 +64,26 @@ export default function useTableroService() {
     }
   };
 
-  return { colocarBarcoEnTablero };
+  const getCeldaRandomDelTablero = (tablero) => {
+    const randomFila = Math.floor(Math.random() * 10);
+    const randomCol = Math.floor(Math.random() * 10);
+    const celda = tablero[randomFila].celdas[randomCol];
+    return celda;
+  };
+
+  const getRandomDireccionBarcos = (barcos) => {
+    const barcosGirados = barcos.map((barco) => getRandomDireccionBarco(barco));
+    return barcosGirados;
+  };
+
+  const getRandomDireccionBarco = (barco) => {
+    const randomNum = Math.round(Math.random());
+    barco.horizontal = randomNum === 1;
+    return barco;
+  };
+
+  return {
+    colocarBarcoEnTablero,
+    colocarBarcosEnCeldasRandom,
+  };
 }

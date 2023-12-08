@@ -1,14 +1,10 @@
-import { useGameContext } from "../../context/game/useGameContext";
 import "./celda.css";
 
-export default function Celda({ contenido, onClick }) {
-  const { selectedBarco } = useGameContext();
-  const className = `celda ${
-    selectedBarco ? "celda-enabled" : "celda-disabled"
-  }`;
+export default function Celda({ contenido, onClick, enabled }) {
+  const className = `celda ${enabled ? "celda-enabled" : "celda-disabled"}`;
 
   const handleOnClick = () => {
-    if (selectedBarco) {
+    if (enabled) {
       onClick();
     }
   };

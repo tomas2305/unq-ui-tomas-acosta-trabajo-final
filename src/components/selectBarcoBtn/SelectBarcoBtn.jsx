@@ -7,9 +7,7 @@ export default function SelectBarcoBtn({ text, barco }) {
   const { barcos, setSelectedBarco } = useGameContext();
 
   useEffect(() => {
-    console.log("Effect", barcos);
     const disabledValue = barcos.includes(barco);
-    console.log(disabledValue);
     setDisabled(disabledValue);
   }, [barco, barcos]);
 
