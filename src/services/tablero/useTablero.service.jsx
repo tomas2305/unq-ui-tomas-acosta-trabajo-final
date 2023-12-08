@@ -1,67 +1,105 @@
 import Barco from "../../components/barcos/Barco";
 
 export default function useTableroService() {
-  const colocarBarcoEnTablero = (tablero, celdaInicio, barco) => {
-    const params = { tablero, celdaInicio, barco };
-    validarCeldas(params);
-    return colocarBarco(params);
-  };
-
   const colocarBarcosEnCeldasRandom = (tablero, barcos) => {
     const barcosGirados = getRandomDireccionBarcos(barcos);
     let newTablero = tablero;
-    barcosGirados.forEach((barco) => {
-      newTablero = colocarBarcoEnTableroEnCeldaRandom(newTablero, barco);
-      console.log(barco);
-    });
+    // barcosGirados.forEach((barco) => {
+    //   newTablero = colocarBarcoEnTableroEnCeldaRandom(newTablero, barco);
+    // });
+    newTablero = colocarBarcoEnTableroEnCeldaRandom(newTablero, barcos[0]);
     return newTablero;
   };
 
   const colocarBarcoEnTableroEnCeldaRandom = (tablero, barco) => {
-    const celdaInicio = getCeldaRandomDelTablero(tablero);
-    const params = { tablero, celdaInicio, barco };
-    validarCeldas(params);
-
-    return colocarBarco(params);
+    const celdaInicio = getCeldaRandomValidaParaBarco(
+      tablero,
+      barco.longitud,
+      barco.horizontal
+    );
+    return colocarBarcoEnTablero(tablero, celdaInicio, barco, false);
   };
 
-  const colocarBarco = (params) => {
-    const nuevoTablero = [...params.tablero];
-    const paramBarco = params.barco;
-    const barco = <Barco tipo={paramBarco.tipo} />;
+  const colocarBarcoEnTablero = (
+    tablero,
+    celdaInicio,
+    barco,
+    lanzarExcepcion
+  ) => {
+    const longitudBarco = barco.longitud;
+    const esHorizontal = barco.horizontal;
+    validarCeldas(
+      tablero,
+      celdaInicio,
+      longitudBarco,
+      esHorizontal,
+      lanzarExcepcion
+    );
+    const nuevoTablero = [...tablero];
+    const paramBarco = barco;
+    const barcoComp = <Barco tipo={paramBarco.tipo} />;
 
-    recorrerCeldas(params, (fila, columna) => {
-      nuevoTablero[fila].celdas[columna].contenido = barco;
-    });
+    recorrerCeldas(
+      celdaInicio,
+      longitudBarco,
+      esHorizontal,
+      (fila, columna) => {
+        nuevoTablero[fila].celdas[columna].contenido = barcoComp;
+      }
+    );
 
     return nuevoTablero;
   };
 
-  const validarCeldas = (params) => {
-    recorrerCeldas(params, (fila, columna) => {
-      if (!params.tablero[fila]?.celdas[columna]) {
-        console.log(
-          "--------------ERROR FUERA DE RANGO!------------------------"
-        );
-        throw new Error("Fuera de rango");
-      } else if (params.tablero[fila].celdas[columna].contenido) {
-        console.log("--------------ERROR POSICION!------------------------");
-        throw new Error("No se puede colocar el barco en esta posicion");
+  const validarCeldas = (
+    tablero,
+    celdaInicio,
+    cantidad,
+    horizontal,
+    lanzarExcepcion
+  ) => {
+    let esPosicionValida = true;
+    let mensajeExcepcion = "";
+
+    recorrerCeldas(celdaInicio, cantidad, horizontal, (fila, columna) => {
+      if (!tablero[fila]?.celdas[columna]) {
+        esPosicionValida = false;
+        mensajeExcepcion = "Fuera de rango";
+        console.log(mensajeExcepcion);
+      } else if (tablero[fila].celdas[columna].contenido) {
+        esPosicionValida = false;
+        mensajeExcepcion = "No se puede colocar el barco en esta posicion";
+        console.log(mensajeExcepcion);
       }
     });
+
+    if (!esPosicionValida && lanzarExcepcion) {
+      throw new Error(mensajeExcepcion);
+    }
+
+    return esPosicionValida;
   };
 
-  const recorrerCeldas = ({ celdaInicio, barco }, ejecutar) => {
-    for (let i = 0; i < barco.longitud; i++) {
-      const fila = barco.horizontal
-        ? celdaInicio.nroFila
-        : celdaInicio.nroFila - i;
-      const columna = barco.horizontal
-        ? celdaInicio.nroCol + i
-        : celdaInicio.nroCol;
+  const recorrerCeldas = (celdaInicio, cantidad, horizontal, ejecutar) => {
+    for (let i = 0; i < cantidad; i++) {
+      const fila = horizontal ? celdaInicio.nroFila : celdaInicio.nroFila - i;
+      const columna = horizontal ? celdaInicio.nroCol + i : celdaInicio.nroCol;
 
       ejecutar(fila, columna);
     }
+  };
+
+  const getCeldaRandomValidaParaBarco = (tablero, longitud, esHorizontal) => {
+    let celda = getCeldaRandomDelTablero(tablero);
+    console.log(validarCeldas(tablero, celda, longitud, esHorizontal, false));
+
+    // do {
+    //   // celda = getCeldaRandomDelTablero(tablero);
+    //   // console.log(celda);
+    //   // console.log(validarCeldas(tablero, celda, longitud, esHorizontal, false));
+    // } while (!validarCeldas(tablero, celda, longitud, esHorizontal, false));
+
+    return celda;
   };
 
   const getCeldaRandomDelTablero = (tablero) => {
