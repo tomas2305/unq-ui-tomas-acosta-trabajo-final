@@ -5,7 +5,7 @@ import { barcosDisponibles } from "./barcos";
 export function GameProvider({ children }) {
   const [barcos, setBarcos] = useState([]);
   const [selectedBarco, setSelectedBarco] = useState(null);
-  const [hasSetBarcos, setHasSetBarcos] = useState(true);
+  const [hasSetBarcos, setHasSetBarcos] = useState(false);
 
   useEffect(() => {
     if (barcos.length === barcosDisponibles.length) {
@@ -16,7 +16,7 @@ export function GameProvider({ children }) {
   const contextValue = useMemo(
     () => ({
       selectedBarco,
-      barcos, 
+      barcos,
       hasSetBarcos,
       setBarcos,
       setSelectedBarco,

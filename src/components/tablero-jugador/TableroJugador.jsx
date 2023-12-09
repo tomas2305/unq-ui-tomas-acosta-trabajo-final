@@ -2,18 +2,22 @@ import Tablero from "../tablero/Tablero";
 import { useState } from "react";
 import useAlert from "../../services/alert/useAlert";
 import { useGameContext } from "../../context/game/useGameContext";
-import useTableroService from "../../services/tablero/useTablero.service";
 import { getTableroInicial } from "../../utils/tablero-inicial/tablero-inicial";
+import { colocarBarcoEnTablero } from "../../services/tablero/useTablero.service";
 
 export default function TableroJugador() {
   const { selectedBarco, setBarcos, setSelectedBarco } = useGameContext();
-  const { colocarBarcoEnTablero } = useTableroService();
   const { sendAlert } = useAlert();
   const [tablero, setTablero] = useState(() => getTableroInicial());
 
   const colocarBarco = (celdaInicio, barco) => {
     try {
-      const nuevoTablero = colocarBarcoEnTablero(tablero, celdaInicio, barco);
+      const nuevoTablero = colocarBarcoEnTablero(
+        tablero,
+        celdaInicio,
+        barco,
+        true
+      );
       setBarcos((barcos) => [...barcos, barco]);
       setSelectedBarco(null);
       setTablero(nuevoTablero);
