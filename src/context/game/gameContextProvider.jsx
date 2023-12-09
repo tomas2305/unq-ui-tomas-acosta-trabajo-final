@@ -5,10 +5,12 @@ import { barcosDisponibles } from "./barcos";
 export function GameProvider({ children }) {
   const [barcos, setBarcos] = useState([]);
   const [selectedBarco, setSelectedBarco] = useState(null);
-  const [hasSetBarcos, setHasSetBarcos] = useState(false);
+  const [hasSetBarcos, setHasSetBarcos] = useState(true);
+  const [esTurnoJugador, setEsTurnoJugador] = useState(true);
 
   useEffect(() => {
     if (barcos.length === barcosDisponibles.length) {
+      setEsTurnoJugador(true);
       setHasSetBarcos(true);
     }
   }, [barcos]);
@@ -17,11 +19,13 @@ export function GameProvider({ children }) {
     () => ({
       selectedBarco,
       barcos,
+      esTurnoJugador,
       hasSetBarcos,
       setBarcos,
       setSelectedBarco,
+      setEsTurnoJugador,
     }),
-    [barcos, hasSetBarcos, selectedBarco]
+    [barcos, esTurnoJugador, hasSetBarcos, selectedBarco]
   );
 
   return (

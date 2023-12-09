@@ -1,7 +1,7 @@
 import Barco from "../../components/barcos/Barco";
+import Disparo from "../../components/disparo/Disparo";
 
 export const colocarBarcosEnCeldasRandom = (tablero, barcos) => {
-  console.log(tablero, barcos);
   setRandomDireccionBarcos(barcos);
   let newTablero = tablero;
 
@@ -13,9 +13,8 @@ export const colocarBarcosEnCeldasRandom = (tablero, barcos) => {
 };
 
 const colocarBarcoEnTableroEnCeldaRandom = (tablero, barco) => {
-  //Estamos validando dos veces que la celda sea la correcta
   const celdaInicio = getCeldaRandomValidaParaBarco(tablero, barco);
-  return colocarBarcoEnTablero(tablero, celdaInicio, barco, false);
+  return colocarBarco(tablero, celdaInicio, barco);
 };
 
 export const colocarBarcoEnTablero = (
@@ -33,13 +32,24 @@ export const colocarBarcoEnTablero = (
     esHorizontal,
     lanzarExcepcion
   );
+  const nuevoTablero = colocarBarco(tablero, celdaInicio, barco);
+
+  return nuevoTablero;
+};
+
+const colocarBarco = (tablero, celdaInicio, barco) => {
   const nuevoTablero = [...tablero];
   const paramBarco = barco;
   const barcoComp = <Barco tipo={paramBarco.tipo} />;
 
-  recorrerCeldas(celdaInicio, longitudBarco, esHorizontal, (fila, columna) => {
-    nuevoTablero[fila].celdas[columna].contenido = barcoComp;
-  });
+  recorrerCeldas(
+    celdaInicio,
+    barco.longitud,
+    barco.horizontal,
+    (fila, columna) => {
+      nuevoTablero[fila].celdas[columna].contenido = barcoComp;
+    }
+  );
 
   return nuevoTablero;
 };
@@ -58,7 +68,6 @@ const validarCeldas = (
     if (!tablero[fila]?.celdas[columna]) {
       esPosicionValida = false;
       mensajeExcepcion = "Fuera de rango";
-      console.log(mensajeExcepcion);
     } else if (tablero[fila].celdas[columna].contenido) {
       esPosicionValida = false;
       mensajeExcepcion = "No se puede colocar el barco en esta posicion";
@@ -102,7 +111,6 @@ const getCeldaRandomValidaParaBarco = (tablero, barco) => {
       false
     );
     intentos++;
-    console.log(intentos);
   }
 
   if (intentos === 100) {
@@ -120,12 +128,23 @@ const getCeldaRandomDelTablero = (tablero) => {
 };
 
 const setRandomDireccionBarcos = (barcos) => {
-  console.log(barcos);
   barcos.forEach((barco) => setRandomDireccionBarco(barco));
-  console.log(barcos);
 };
 
 const setRandomDireccionBarco = (barco) => {
   const randomNum = Math.round(Math.random());
   barco.horizontal = randomNum === 1;
+};
+
+export const hacerDisparo = (tablero, celda) => {
+  const nuevoTablero = [...tablero];
+  const celdaTablero = nuevoTablero[celda.nroFila].celdas[celda.nroCol];
+  console.log(celdaTablero);
+  if (!celdaTablero.tieneDisparo) {
+    nuevoTablero[celda.nroFila].celdas[celda.nroCol].contenido = (
+      <Disparo esAcertado={celda.contenido !== null} />
+    );
+    nuevoTablero[celda.nroFila].celdas[celda.nroCol].tieneDisparo = true;
+  }
+  return nuevoTablero;
 };

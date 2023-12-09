@@ -4,11 +4,14 @@ import useAlert from "../../services/alert/useAlert";
 import { getTableroInicial } from "../../utils/tablero-inicial/tablero-inicial";
 import { useGameContext } from "../../context/game/useGameContext";
 import { barcosDisponibles } from "../../context/game/barcos";
-import { colocarBarcosEnCeldasRandom } from "../../services/tablero/useTablero.service";
+import {
+  colocarBarcosEnCeldasRandom,
+  hacerDisparo,
+} from "../../services/tablero/useTablero.service";
 
 export default function TableroContrincante() {
   const { sendAlert } = useAlert();
-  const { hasSetBarcos } = useGameContext();
+  const { hasSetBarcos, esTurnoJugador } = useGameContext();
   const [tablero, setTablero] = useState(() => getTableroInicial());
   const [tableroConfigurado, setTableroConfigurado] = useState(false);
 
@@ -28,5 +31,16 @@ export default function TableroContrincante() {
     }
   }, [hasSetBarcos, sendAlert, tableroConfigurado]);
 
-  return <Tablero tablero={tablero} enabled={false} />;
+  const handleDisparo = (celda) => {
+    const nuevoTablero = hacerDisparo(tablero, celda);
+    setTablero(nuevoTablero);
+  };
+
+  return (
+    <Tablero
+      tablero={tablero}
+      enabled={hasSetBarcos && esTurnoJugador}
+      onClickCelda={handleDisparo}
+    />
+  );
 }

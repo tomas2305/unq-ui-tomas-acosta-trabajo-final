@@ -9,6 +9,7 @@ export const getTableroInicial = () => {
           return {
             nroFila: filaIndex,
             nroCol: colIndex,
+            tieneDisparo: false,
             contenido: null,
           };
         }),
