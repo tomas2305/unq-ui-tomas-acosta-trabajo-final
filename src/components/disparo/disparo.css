@@ -1,0 +1,12 @@
+.disparo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--celda-size);
+  height: var(--celda-size);
+}
+
+.disparo-focus {
+  color: red;
+  border: solid 4px red;
+}
