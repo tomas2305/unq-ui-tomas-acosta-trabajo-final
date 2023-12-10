@@ -11,7 +11,7 @@ import {
 
 export default function TableroEnemigo() {
   const { sendAlert } = useAlert();
-  const { hasSetBarcos, esTurnoJugador } = useGameContext();
+  const { hasSetBarcos, esTurnoJugador, setBarcosEnemigo } = useGameContext();
   const [tablero, setTablero] = useState(() => getTableroInicial());
   const [tableroConfigurado, setTableroConfigurado] = useState(false);
 
@@ -24,16 +24,17 @@ export default function TableroEnemigo() {
           nuevosBarcos
         );
         setTableroConfigurado(true);
+        setBarcosEnemigo(nuevosBarcos);
         setTablero(newTablero);
       } catch (error) {
         sendAlert(error.message, "error");
       }
       sendAlert("Se coloco corretamente", "success");
     }
-  }, [hasSetBarcos, sendAlert, tableroConfigurado]);
+  }, [hasSetBarcos, sendAlert, setBarcosEnemigo, tableroConfigurado]);
 
   const handleDisparo = (celda) => {
-    const nuevoTablero = hacerDisparo(tablero, celda);
+    const nuevoTablero = hacerDisparo(tablero, celda, setBarcosEnemigo);
     setTablero(nuevoTablero);
   };
 
