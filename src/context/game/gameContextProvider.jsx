@@ -4,6 +4,7 @@ import { barcosDisponibles } from "./barcos";
 
 export function GameProvider({ children }) {
   const [barcos, setBarcos] = useState([]);
+  const [barcosEnemigo, setBarcosEnemigo] = useState([]);
   const [selectedBarco, setSelectedBarco] = useState(null);
   const [hasSetBarcos, setHasSetBarcos] = useState(true);
   const [esTurnoJugador, setEsTurnoJugador] = useState(true);
@@ -21,11 +22,13 @@ export function GameProvider({ children }) {
       barcos,
       esTurnoJugador,
       hasSetBarcos,
+      barcosEnemigo,
       setBarcos,
       setSelectedBarco,
       setEsTurnoJugador,
+      setBarcosEnemigo,
     }),
-    [barcos, esTurnoJugador, hasSetBarcos, selectedBarco]
+    [barcos, barcosEnemigo, esTurnoJugador, hasSetBarcos, selectedBarco]
   );
 
   return (

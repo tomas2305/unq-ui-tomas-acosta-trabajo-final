@@ -7,9 +7,9 @@ import { barcosDisponibles } from "../../context/game/barcos";
 import {
   colocarBarcosEnCeldasRandom,
   hacerDisparo,
-} from "../../services/tablero/useTablero.service";
+} from "../../services/tablero/tablero.service";
 
-export default function TableroContrincante() {
+export default function TableroEnemigo() {
   const { sendAlert } = useAlert();
   const { hasSetBarcos, esTurnoJugador } = useGameContext();
   const [tablero, setTablero] = useState(() => getTableroInicial());
@@ -18,9 +18,10 @@ export default function TableroContrincante() {
   useEffect(() => {
     if (hasSetBarcos && !tableroConfigurado) {
       try {
+        const nuevosBarcos = barcosDisponibles;
         const newTablero = colocarBarcosEnCeldasRandom(
           getTableroInicial(),
-          barcosDisponibles
+          nuevosBarcos
         );
         setTableroConfigurado(true);
         setTablero(newTablero);

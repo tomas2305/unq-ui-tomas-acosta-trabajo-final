@@ -2,7 +2,7 @@ import TableroJugador from "../../components/tablero-jugador/TableroJugador";
 import { Container } from "@mui/material";
 import "./home.css";
 import SelectBarcos from "../../components/selectBarcos/SelectBarcos";
-import TableroContrincante from "../../components/tablero-contrincante/TableroContrincante";
+import TableroEnemigo from "../../components/tablero-enemigo/TableroEnemigo";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
       <div className="game-container">
         <div className="tableros-container">
           <TableroJugador />
-          <TableroContrincante />
+          <TableroEnemigo />
         </div>
         <div className="select-barcos">
           <SelectBarcos />

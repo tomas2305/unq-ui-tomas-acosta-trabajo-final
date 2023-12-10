@@ -10,6 +10,7 @@ export const getTableroInicial = () => {
             nroFila: filaIndex,
             nroCol: colIndex,
             tieneDisparo: false,
+            tieneBarco: false,
             contenido: null,
           };
         }),

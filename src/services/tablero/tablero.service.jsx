@@ -39,8 +39,7 @@ export const colocarBarcoEnTablero = (
 
 const colocarBarco = (tablero, celdaInicio, barco) => {
   const nuevoTablero = [...tablero];
-  const paramBarco = barco;
-  const barcoComp = <Barco tipo={paramBarco.tipo} />;
+  const barcoComp = <Barco barco={barco} />;
 
   recorrerCeldas(
     celdaInicio,
@@ -48,6 +47,7 @@ const colocarBarco = (tablero, celdaInicio, barco) => {
     barco.horizontal,
     (fila, columna) => {
       nuevoTablero[fila].celdas[columna].contenido = barcoComp;
+      nuevoTablero[fila].celdas[columna].tieneBarco = true;
     }
   );
 
@@ -139,12 +139,18 @@ const setRandomDireccionBarco = (barco) => {
 export const hacerDisparo = (tablero, celda) => {
   const nuevoTablero = [...tablero];
   const celdaTablero = nuevoTablero[celda.nroFila].celdas[celda.nroCol];
-  console.log(celdaTablero);
+  if (celda.tieneBarco) {
+    handleGolpeEnBarco(celda.contenido);
+  }
   if (!celdaTablero.tieneDisparo) {
     nuevoTablero[celda.nroFila].celdas[celda.nroCol].contenido = (
-      <Disparo esAcertado={celda.contenido !== null} />
+      <Disparo esAcertado={celda.tieneBarco} />
     );
     nuevoTablero[celda.nroFila].celdas[celda.nroCol].tieneDisparo = true;
   }
   return nuevoTablero;
+};
+
+const handleGolpeEnBarco = (barco) => {
+  console.log(barco);
 };

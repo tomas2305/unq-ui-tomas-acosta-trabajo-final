@@ -3,7 +3,7 @@ import { useState } from "react";
 import useAlert from "../../services/alert/useAlert";
 import { useGameContext } from "../../context/game/useGameContext";
 import { getTableroInicial } from "../../utils/tablero-inicial/tablero-inicial";
-import { colocarBarcoEnTablero } from "../../services/tablero/useTablero.service";
+import { colocarBarcoEnTablero } from "../../services/tablero/tablero.service";
 
 export default function TableroJugador() {
   const { selectedBarco, setBarcos, setSelectedBarco } = useGameContext();
