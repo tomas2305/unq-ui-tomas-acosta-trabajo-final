@@ -23,21 +23,35 @@ export default function TableroJugador() {
   } = useGameContext();
   const { sendAlert } = useAlert();
   const [tablero, setTablero] = useState(() => getTableroInicial());
+  const [recibioDisparo, setRecibioDisparo] = useState(false);
 
   useEffect(() => {
     const getDisparoDeEnemigo = async () => {
-      if (hasSetBarcos && !esTurnoJugador && !flotaEnemigaDestruida) {
+      if (
+        hasSetBarcos &&
+        !esTurnoJugador &&
+        !flotaEnemigaDestruida &&
+        !recibioDisparo
+      ) {
         await tiempoDelay(1023);
         const newTablero = hacerDisparoEnCeldaRandom(tablero, setBarcos);
-        setEsTurnoJugador(true);
         setTablero(newTablero);
+        setRecibioDisparo(true);
+        await cambiarTurno();
       }
+    };
+
+    const cambiarTurno = async () => {
+      await tiempoDelay(1023);
+      setEsTurnoJugador(true);
+      setRecibioDisparo(false);
     };
 
     getDisparoDeEnemigo();
   }, [
     activo,
     barcosEnemigo,
+    recibioDisparo,
     esTurnoJugador,
     flotaEnemigaDestruida,
     hasSetBarcos,
