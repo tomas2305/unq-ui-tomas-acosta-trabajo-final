@@ -9,6 +9,7 @@ export function GameProvider({ children }) {
   const [selectedBarco, setSelectedBarco] = useState(null);
   const [hasSetBarcos, setHasSetBarcos] = useState(false);
   const [hasSetBarcosEnemigo, setHasSetBarcosEnemigo] = useState(false);
+  const [flotaEnemigaDestruida, setFlotaEnemigaDestruida] = useState(false);
   const [esTurnoJugador, setEsTurnoJugador] = useState(true);
   const [mensaje, setMensaje] = useState("Coloca tus barcos");
 
@@ -22,21 +23,32 @@ export function GameProvider({ children }) {
   }, [barcos, esTurnoJugador, hasSetBarcos]);
 
   useEffect(() => {
-    const sinBarcosEnemigos = barcosEnemigo.length === 0;
-    const sinBarcos = barcos.length === 0;
+    const sinBarcos = barcos.every((b) => b.vidas === 0);
 
     if (
       hasSetBarcos &&
       hasSetBarcosEnemigo &&
-      (sinBarcosEnemigos || sinBarcos)
+      (flotaEnemigaDestruida || sinBarcos)
     ) {
       setActivo(false);
-      const mensaje = sinBarcosEnemigos
+      const mensaje = flotaEnemigaDestruida
         ? "Ganaste! Felicidades!! :D"
         : "Perdiste! :(";
       setMensaje(mensaje);
     }
-  }, [barcos, barcosEnemigo, hasSetBarcos, hasSetBarcosEnemigo]);
+  }, [
+    barcos,
+    barcosEnemigo,
+    flotaEnemigaDestruida,
+    hasSetBarcos,
+    hasSetBarcosEnemigo,
+  ]);
+
+  useEffect(() => {
+    if (hasSetBarcosEnemigo) {
+      setFlotaEnemigaDestruida(barcosEnemigo.every((b) => b.vidas === 0));
+    }
+  }, [barcosEnemigo, hasSetBarcosEnemigo]);
 
   const reset = () => {
     setBarcos([]);
@@ -57,9 +69,11 @@ export function GameProvider({ children }) {
       barcosEnemigo,
       mensaje,
       activo,
+      flotaEnemigaDestruida,
       setBarcos,
       setSelectedBarco,
       setBarcosEnemigo,
+      setFlotaEnemigaDestruida,
       setMensaje,
       setEsTurnoJugador,
       setActivo,
@@ -71,6 +85,7 @@ export function GameProvider({ children }) {
       barcos,
       barcosEnemigo,
       esTurnoJugador,
+      flotaEnemigaDestruida,
       hasSetBarcos,
       hasSetBarcosEnemigo,
       mensaje,

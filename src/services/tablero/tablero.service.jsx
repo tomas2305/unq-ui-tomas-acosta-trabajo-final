@@ -153,14 +153,7 @@ export const hacerDisparo = (tablero, celda, setBarcos) => {
 
 const handleGolpeEnBarco = (barcoComp, setBarcos) => {
   const barco = barcoComp.props.barco;
-  setBarcos((barcos) => {
-    const barcoActual = barcos.find((b) => b.tipo === barco.tipo);
-    if (barcoActual.vidas === 1) {
-      return quitarBarco(barco, barcos);
-    } else {
-      return quitarVidaDeBarco(barco, barcos);
-    }
-  });
+  setBarcos((barcos) => quitarVidaDeBarco(barco, barcos));
 };
 
 const quitarVidaDeBarco = (barco, barcos) => {
@@ -171,10 +164,6 @@ const quitarVidaDeBarco = (barco, barcos) => {
     return b;
   });
   return newBarcos;
-};
-
-const quitarBarco = (barco, barcos) => {
-  return barcos.filter((b) => b.tipo !== barco.tipo);
 };
 
 export const hacerDisparoEnCeldaRandom = (tablero, setBarcos) => {

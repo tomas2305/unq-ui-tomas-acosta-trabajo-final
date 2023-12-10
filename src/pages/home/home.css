@@ -8,16 +8,16 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.3rem;
 }
 
-.tableros-container {
+.container-space-around {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
-.select-barcos {
-  padding: 0 5rem;
+.tablero-space {
+  width: 23rem;
 }

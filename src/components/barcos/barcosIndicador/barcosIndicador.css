@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+  min-height: 1rem;
+}
+
+.barco-sano {
+  color: green;
+}
+
+.barco-destruido {
+  color: red;
+}
