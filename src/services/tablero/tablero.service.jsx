@@ -203,3 +203,7 @@ export const tiempoDelay = (milisengundos) => {
     }, milisengundos);
   });
 };
+
+export const getBarcosInvisibles = (barcos) => {
+  return barcos.map((barco) => ({ ...barco, invisible: true }));
+};

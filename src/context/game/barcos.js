@@ -7,6 +7,7 @@ export const portaaviones = {
   horizontal: false,
   color: colors.portaaviones,
   vidas: 5,
+  invisible: false,
 };
 
 export const crucero = {
@@ -16,6 +17,7 @@ export const crucero = {
   horizontal: false,
   color: colors.crucero,
   vidas: 4,
+  invisible: false,
 };
 
 export const submarino = {
@@ -25,6 +27,7 @@ export const submarino = {
   horizontal: false,
   color: colors.submarino,
   vidas: 3,
+  invisible: false,
 };
 
 export const lancha = {
@@ -34,6 +37,7 @@ export const lancha = {
   horizontal: false,
   color: colors.lancha,
   vidas: 2,
+  invisible: false,
 };
 
 export const barcosDisponibles = [portaaviones, crucero, submarino, lancha];

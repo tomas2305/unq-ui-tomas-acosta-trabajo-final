@@ -6,6 +6,7 @@ import { useGameContext } from "../../context/game/useGameContext";
 import { barcosDisponibles } from "../../context/game/barcos";
 import {
   colocarBarcosEnCeldasRandom,
+  getBarcosInvisibles,
   hacerDisparo,
 } from "../../services/tablero/tablero.service";
 
@@ -19,14 +20,15 @@ export default function TableroEnemigo() {
     setBarcosEnemigo,
     setMensaje,
     setEsTurnoJugador,
-    activo
+    activo,
   } = useGameContext();
   const [tablero, setTablero] = useState(() => getTableroInicial());
 
   useEffect(() => {
-    if ((hasSetBarcos && !hasSetBarcosEnemigo)) {
+    if (hasSetBarcos && !hasSetBarcosEnemigo) {
       try {
-        const nuevosBarcos = barcosDisponibles;
+        const nuevosBarcos = getBarcosInvisibles(barcosDisponibles);
+        console.log(nuevosBarcos);
         const newTablero = colocarBarcosEnCeldasRandom(
           getTableroInicial(),
           nuevosBarcos
@@ -38,7 +40,13 @@ export default function TableroEnemigo() {
         sendAlert(error.message, "error");
       }
     }
-  }, [ hasSetBarcos, hasSetBarcosEnemigo, sendAlert, setBarcosEnemigo, setHasSetBarcosEnemigo]);
+  }, [
+    hasSetBarcos,
+    hasSetBarcosEnemigo,
+    sendAlert,
+    setBarcosEnemigo,
+    setHasSetBarcosEnemigo,
+  ]);
 
   const handleDisparo = (celda) => {
     if (celda.tieneDisparo) {
