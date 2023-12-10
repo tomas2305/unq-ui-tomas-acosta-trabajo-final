@@ -10,15 +10,14 @@ export function GameProvider({ children }) {
   const [hasSetBarcos, setHasSetBarcos] = useState(false);
   const [hasSetBarcosEnemigo, setHasSetBarcosEnemigo] = useState(false);
   const [esTurnoJugador, setEsTurnoJugador] = useState(true);
-  const [mensaje, setMensaje] = useState("");
+  const [mensaje, setMensaje] = useState("Coloca tus barcos");
 
   useEffect(() => {
     if (barcos.length === barcosDisponibles.length) {
       setHasSetBarcos(true);
     }
     if (hasSetBarcos) {
-      const nuevoMensaje = esTurnoJugador ? "Tu turno" : "Turno del enemigo";
-      setMensaje(nuevoMensaje);
+      setMensaje("A luchar!");
     }
   }, [barcos, esTurnoJugador, hasSetBarcos]);
 
@@ -39,6 +38,15 @@ export function GameProvider({ children }) {
     }
   }, [barcos, barcosEnemigo, hasSetBarcos, hasSetBarcosEnemigo]);
 
+  const reset = () => {
+    setBarcos([]);
+    setBarcosEnemigo([]);
+    setHasSetBarcos(false);
+    setHasSetBarcosEnemigo(false);
+    setEsTurnoJugador(true);
+    setActivo(true);
+  };
+
   const contextValue = useMemo(
     () => ({
       selectedBarco,
@@ -56,6 +64,7 @@ export function GameProvider({ children }) {
       setEsTurnoJugador,
       setActivo,
       setHasSetBarcosEnemigo,
+      reset,
     }),
     [
       activo,

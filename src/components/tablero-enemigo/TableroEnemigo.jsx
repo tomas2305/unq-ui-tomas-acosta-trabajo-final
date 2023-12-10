@@ -50,7 +50,7 @@ export default function TableroEnemigo() {
 
   const handleDisparo = (celda) => {
     if (celda.tieneDisparo) {
-      sendAlert("Esta celda ya tiene un disparo", "error");
+      sendAlert("Esta celda ya fue seleccionada", "error");
     } else {
       const nuevoTablero = hacerDisparo(
         tablero,
@@ -65,6 +65,7 @@ export default function TableroEnemigo() {
 
   return (
     <Tablero
+      focus={esTurnoJugador && activo && hasSetBarcosEnemigo}
       tablero={tablero}
       enabled={hasSetBarcos && esTurnoJugador && activo}
       onClickCelda={handleDisparo}

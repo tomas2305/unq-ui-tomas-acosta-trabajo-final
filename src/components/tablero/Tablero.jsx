@@ -2,11 +2,14 @@ import "./tablero.css";
 import Celda from "../celda/Celda";
 import { Typography } from "@mui/material";
 
-export default function Tablero({ tablero, onClickCelda, enabled }) {
+export default function Tablero({ tablero, onClickCelda, enabled, focus }) {
   const letras = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+  const containerClassName = `tablero-container ${
+    focus ? "tablero-focus" : ""
+  }`;
 
   return (
-    <div className="tablero-container">
+    <div className={containerClassName}>
       <div className=" ">
         {letras.map((letra) => (
           <div className="letra" key={letra}>

@@ -6,7 +6,7 @@ const AppTheme = createTheme({
     MuiCssBaseline: {
       styleOverrides: `
             body {
-              background-color: ${colors.secondaryMain};
+              background-color: ${colors.backgroundColor};
             }
 
             /* Handle */

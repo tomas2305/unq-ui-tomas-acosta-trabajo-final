@@ -26,7 +26,7 @@ export default function TableroJugador() {
   useEffect(() => {
     const getDisparoDeEnemigo = async () => {
       if (hasSetBarcos && !esTurnoJugador && barcosEnemigo.length !== 0) {
-        // await tiempoDelay(1023);
+        await tiempoDelay(1023);
         const newTablero = hacerDisparoEnCeldaRandom(tablero, setBarcos);
         setEsTurnoJugador(true);
         setTablero(newTablero);
@@ -64,6 +64,7 @@ export default function TableroJugador() {
   return (
     <Tablero
       tablero={tablero}
+      focus={!esTurnoJugador && activo}
       onClickCelda={(celda) => colocarBarco(celda, selectedBarco)}
       enabled={!hasSetBarcos && activo && selectedBarco}
     />

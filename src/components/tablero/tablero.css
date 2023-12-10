@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.tablero-focus {
+  border: solid 5px red;
+}
+
 .fila {
   display: flex;
   align-items: center;
