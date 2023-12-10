@@ -11,7 +11,7 @@ import {
 
 export default function TableroEnemigo() {
   const { sendAlert } = useAlert();
-  const { hasSetBarcos, esTurnoJugador, setBarcosEnemigo } = useGameContext();
+  const { hasSetBarcos, esTurnoJugador, setBarcosEnemigo, setMensaje } = useGameContext();
   const [tablero, setTablero] = useState(() => getTableroInicial());
   const [tableroConfigurado, setTableroConfigurado] = useState(false);
 
@@ -34,9 +34,15 @@ export default function TableroEnemigo() {
   }, [hasSetBarcos, sendAlert, setBarcosEnemigo, tableroConfigurado]);
 
   const handleDisparo = (celda) => {
-    const nuevoTablero = hacerDisparo(tablero, celda, setBarcosEnemigo);
+    const nuevoTablero = hacerDisparo(
+      tablero,
+      celda,
+      setBarcosEnemigo,
+      setMensaje
+    );
     setTablero(nuevoTablero);
   };
+
 
   return (
     <Tablero

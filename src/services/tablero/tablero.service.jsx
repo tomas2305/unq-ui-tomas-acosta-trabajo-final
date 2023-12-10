@@ -136,11 +136,11 @@ const setRandomDireccionBarco = (barco) => {
   barco.horizontal = randomNum === 1;
 };
 
-export const hacerDisparo = (tablero, celda, setBarcos) => {
+export const hacerDisparo = (tablero, celda, setBarcos, setMensaje) => {
   const nuevoTablero = [...tablero];
   const celdaTablero = nuevoTablero[celda.nroFila].celdas[celda.nroCol];
   if (celda.tieneBarco && !celda.tieneDisparo) {
-    handleGolpeEnBarco(celda.contenido, setBarcos);
+    handleGolpeEnBarco(celda.contenido, setBarcos, setMensaje);
   }
   if (!celdaTablero.tieneDisparo) {
     nuevoTablero[celda.nroFila].celdas[celda.nroCol].contenido = (
@@ -151,9 +151,13 @@ export const hacerDisparo = (tablero, celda, setBarcos) => {
   return nuevoTablero;
 };
 
-const handleGolpeEnBarco = (barcoComp, setBarcos) => {
+const handleGolpeEnBarco = (barcoComp, setBarcos, setMensaje) => {
   const barco = barcoComp.props.barco;
   setBarcos((barcos) => {
+    console.log(barcos);
+    if (barcos.length === 0) {
+      setMensaje('Ganaste!');
+    }
     if (barco.vidas === 1) {
       return quitarBarco(barco, barcos);
     } else {

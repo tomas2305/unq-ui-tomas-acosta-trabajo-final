@@ -8,6 +8,7 @@ export function GameProvider({ children }) {
   const [selectedBarco, setSelectedBarco] = useState(null);
   const [hasSetBarcos, setHasSetBarcos] = useState(true);
   const [esTurnoJugador, setEsTurnoJugador] = useState(true);
+  const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
     if (barcos.length === barcosDisponibles.length) {
@@ -23,12 +24,13 @@ export function GameProvider({ children }) {
       esTurnoJugador,
       hasSetBarcos,
       barcosEnemigo,
+      mensaje,
       setBarcos,
-      setSelectedBarco,
-      setEsTurnoJugador,
+      setSelectedBarco, 
       setBarcosEnemigo,
+      setMensaje,
     }),
-    [barcos, barcosEnemigo, esTurnoJugador, hasSetBarcos, selectedBarco]
+    [barcos, barcosEnemigo, esTurnoJugador, hasSetBarcos, mensaje, selectedBarco]
   );
 
   return (
