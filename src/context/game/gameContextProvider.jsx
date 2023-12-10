@@ -3,19 +3,41 @@ import { gameContext } from "./gameContext";
 import { barcosDisponibles } from "./barcos";
 
 export function GameProvider({ children }) {
+  const [activo, setActivo] = useState(true);
   const [barcos, setBarcos] = useState([]);
   const [barcosEnemigo, setBarcosEnemigo] = useState([]);
   const [selectedBarco, setSelectedBarco] = useState(null);
-  const [hasSetBarcos, setHasSetBarcos] = useState(true);
+  const [hasSetBarcos, setHasSetBarcos] = useState(false);
+  const [hasSetBarcosEnemigo, setHasSetBarcosEnemigo] = useState(false);
   const [esTurnoJugador, setEsTurnoJugador] = useState(true);
   const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
     if (barcos.length === barcosDisponibles.length) {
-      setEsTurnoJugador(true);
       setHasSetBarcos(true);
     }
-  }, [barcos]);
+    if (hasSetBarcos) {
+      const nuevoMensaje = esTurnoJugador ? "Tu turno" : "Turno del enemigo";
+      setMensaje(nuevoMensaje);
+    }
+  }, [barcos, esTurnoJugador, hasSetBarcos]);
+
+  useEffect(() => {
+    const sinBarcosEnemigos = barcosEnemigo.length === 0;
+    const sinBarcos = barcos.length === 0;
+
+    if (
+      hasSetBarcos &&
+      hasSetBarcosEnemigo &&
+      (sinBarcosEnemigos || sinBarcos)
+    ) {
+      setActivo(false);
+      const mensaje = sinBarcosEnemigos
+        ? "Ganaste! Felicidades!! :D"
+        : "Perdiste! :(";
+      setMensaje(mensaje);
+    }
+  }, [barcos, barcosEnemigo, hasSetBarcos, hasSetBarcosEnemigo]);
 
   const contextValue = useMemo(
     () => ({
@@ -23,14 +45,28 @@ export function GameProvider({ children }) {
       barcos,
       esTurnoJugador,
       hasSetBarcos,
+      hasSetBarcosEnemigo,
       barcosEnemigo,
       mensaje,
+      activo,
       setBarcos,
-      setSelectedBarco, 
+      setSelectedBarco,
       setBarcosEnemigo,
       setMensaje,
+      setEsTurnoJugador,
+      setActivo,
+      setHasSetBarcosEnemigo,
     }),
-    [barcos, barcosEnemigo, esTurnoJugador, hasSetBarcos, mensaje, selectedBarco]
+    [
+      activo,
+      barcos,
+      barcosEnemigo,
+      esTurnoJugador,
+      hasSetBarcos,
+      hasSetBarcosEnemigo,
+      mensaje,
+      selectedBarco,
+    ]
   );
 
   return (

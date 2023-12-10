@@ -136,11 +136,11 @@ const setRandomDireccionBarco = (barco) => {
   barco.horizontal = randomNum === 1;
 };
 
-export const hacerDisparo = (tablero, celda, setBarcos, setMensaje) => {
+export const hacerDisparo = (tablero, celda, setBarcos) => {
   const nuevoTablero = [...tablero];
   const celdaTablero = nuevoTablero[celda.nroFila].celdas[celda.nroCol];
   if (celda.tieneBarco && !celda.tieneDisparo) {
-    handleGolpeEnBarco(celda.contenido, setBarcos, setMensaje);
+    handleGolpeEnBarco(celda.contenido, setBarcos);
   }
   if (!celdaTablero.tieneDisparo) {
     nuevoTablero[celda.nroFila].celdas[celda.nroCol].contenido = (
@@ -151,14 +151,11 @@ export const hacerDisparo = (tablero, celda, setBarcos, setMensaje) => {
   return nuevoTablero;
 };
 
-const handleGolpeEnBarco = (barcoComp, setBarcos, setMensaje) => {
+const handleGolpeEnBarco = (barcoComp, setBarcos) => {
   const barco = barcoComp.props.barco;
   setBarcos((barcos) => {
-    console.log(barcos);
-    if (barcos.length === 0) {
-      setMensaje('Ganaste!');
-    }
-    if (barco.vidas === 1) {
+    const barcoActual = barcos.find((b) => b.tipo === barco.tipo);
+    if (barcoActual.vidas === 1) {
       return quitarBarco(barco, barcos);
     } else {
       return quitarVidaDeBarco(barco, barcos);
@@ -167,16 +164,43 @@ const handleGolpeEnBarco = (barcoComp, setBarcos, setMensaje) => {
 };
 
 const quitarVidaDeBarco = (barco, barcos) => {
-  const newBarcos = barcos;
-  newBarcos.forEach((b) => {
+  const newBarcos = barcos.map((b) => {
     if (b.tipo === barco.tipo) {
-      b.vidas--;
+      return { ...b, vidas: b.vidas - 1 };
     }
+    return b;
   });
   return newBarcos;
 };
 
 const quitarBarco = (barco, barcos) => {
-  const newBarcos = barcos.filter((b) => b.tipo !== barco.tipo);
-  return newBarcos;
+  return barcos.filter((b) => b.tipo !== barco.tipo);
+};
+
+export const hacerDisparoEnCeldaRandom = (tablero, setBarcos) => {
+  const celdaRandom = getCeldaRandomValidaParaDisparo(tablero);
+  return hacerDisparo(tablero, celdaRandom, setBarcos);
+};
+
+const getCeldaRandomValidaParaDisparo = (tablero) => {
+  let celda = getCeldaRandomDelTablero(tablero);
+  let intentos = 0;
+
+  while (celda.tieneDisparo && intentos !== 100) {
+    celda = getCeldaRandomDelTablero(tablero);
+    intentos++;
+  }
+  console.log(intentos);
+  if (intentos === 100) {
+    throw new Error("Algo salio mal");
+  }
+  return celda;
+};
+
+export const tiempoDelay = (milisengundos) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, milisengundos);
+  });
 };

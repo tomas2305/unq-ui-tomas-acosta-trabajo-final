@@ -1,14 +1,48 @@
 import Tablero from "../tablero/Tablero";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAlert from "../../services/alert/useAlert";
 import { useGameContext } from "../../context/game/useGameContext";
 import { getTableroInicial } from "../../utils/tablero-inicial/tablero-inicial";
-import { colocarBarcoEnTablero } from "../../services/tablero/tablero.service";
+import {
+  colocarBarcoEnTablero,
+  hacerDisparoEnCeldaRandom,
+  tiempoDelay,
+} from "../../services/tablero/tablero.service";
 
 export default function TableroJugador() {
-  const { selectedBarco, setBarcos, setSelectedBarco } = useGameContext();
+  const {
+    selectedBarco,
+    setBarcos,
+    setSelectedBarco,
+    hasSetBarcos,
+    barcosEnemigo,
+    esTurnoJugador,
+    setEsTurnoJugador,
+    activo,
+  } = useGameContext();
   const { sendAlert } = useAlert();
   const [tablero, setTablero] = useState(() => getTableroInicial());
+
+  useEffect(() => {
+    const getDisparoDeEnemigo = async () => {
+      if (hasSetBarcos && !esTurnoJugador && barcosEnemigo.length !== 0) {
+        await tiempoDelay(1023);
+        const newTablero = hacerDisparoEnCeldaRandom(tablero, setBarcos);
+        setEsTurnoJugador(true);
+        setTablero(newTablero);
+      }
+    };
+
+    getDisparoDeEnemigo();
+  }, [
+    activo,
+    barcosEnemigo,
+    esTurnoJugador,
+    hasSetBarcos,
+    setBarcos,
+    setEsTurnoJugador,
+    tablero,
+  ]);
 
   const colocarBarco = (celdaInicio, barco) => {
     try {
@@ -31,7 +65,7 @@ export default function TableroJugador() {
     <Tablero
       tablero={tablero}
       onClickCelda={(celda) => colocarBarco(celda, selectedBarco)}
-      enabled={selectedBarco}
+      enabled={!hasSetBarcos && activo && selectedBarco}
     />
   );
 }

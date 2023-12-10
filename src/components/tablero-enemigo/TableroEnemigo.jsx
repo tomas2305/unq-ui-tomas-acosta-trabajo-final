@@ -11,43 +11,54 @@ import {
 
 export default function TableroEnemigo() {
   const { sendAlert } = useAlert();
-  const { hasSetBarcos, esTurnoJugador, setBarcosEnemigo, setMensaje } = useGameContext();
+  const {
+    hasSetBarcos,
+    hasSetBarcosEnemigo,
+    setHasSetBarcosEnemigo,
+    esTurnoJugador,
+    setBarcosEnemigo,
+    setMensaje,
+    setEsTurnoJugador,
+    activo
+  } = useGameContext();
   const [tablero, setTablero] = useState(() => getTableroInicial());
-  const [tableroConfigurado, setTableroConfigurado] = useState(false);
 
   useEffect(() => {
-    if (hasSetBarcos && !tableroConfigurado) {
+    if ((hasSetBarcos && !hasSetBarcosEnemigo)) {
       try {
         const nuevosBarcos = barcosDisponibles;
         const newTablero = colocarBarcosEnCeldasRandom(
           getTableroInicial(),
           nuevosBarcos
         );
-        setTableroConfigurado(true);
+        setHasSetBarcosEnemigo(true);
         setBarcosEnemigo(nuevosBarcos);
         setTablero(newTablero);
       } catch (error) {
         sendAlert(error.message, "error");
       }
-      sendAlert("Se coloco corretamente", "success");
     }
-  }, [hasSetBarcos, sendAlert, setBarcosEnemigo, tableroConfigurado]);
+  }, [ hasSetBarcos, hasSetBarcosEnemigo, sendAlert, setBarcosEnemigo, setHasSetBarcosEnemigo]);
 
   const handleDisparo = (celda) => {
-    const nuevoTablero = hacerDisparo(
-      tablero,
-      celda,
-      setBarcosEnemigo,
-      setMensaje
-    );
-    setTablero(nuevoTablero);
+    if (celda.tieneDisparo) {
+      sendAlert("Esta celda ya tiene un disparo", "error");
+    } else {
+      const nuevoTablero = hacerDisparo(
+        tablero,
+        celda,
+        setBarcosEnemigo,
+        setMensaje
+      );
+      setEsTurnoJugador(false);
+      setTablero(nuevoTablero);
+    }
   };
-
 
   return (
     <Tablero
       tablero={tablero}
-      enabled={hasSetBarcos && esTurnoJugador}
+      enabled={hasSetBarcos && esTurnoJugador && activo}
       onClickCelda={handleDisparo}
     />
   );
