@@ -190,7 +190,6 @@ const getCeldaRandomValidaParaDisparo = (tablero) => {
     celda = getCeldaRandomDelTablero(tablero);
     intentos++;
   }
-  console.log(intentos);
   if (intentos === 100) {
     throw new Error("Algo salio mal");
   }

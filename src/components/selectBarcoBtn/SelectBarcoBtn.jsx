@@ -4,12 +4,12 @@ import { useGameContext } from "../../context/game/useGameContext";
 
 export default function SelectBarcoBtn({ text, barco }) {
   const [disabled, setDisabled] = useState(false);
-  const { barcos, setSelectedBarco } = useGameContext();
+  const { barcos, setSelectedBarco, hasSetBarcos } = useGameContext();
 
   useEffect(() => {
-    const disabledValue = barcos.includes(barco);
+    const disabledValue = barcos.includes(barco) || hasSetBarcos;
     setDisabled(disabledValue);
-  }, [barco, barcos]);
+  }, [barco, barcos, hasSetBarcos]);
 
   return (
     <Button
