@@ -139,7 +139,7 @@ const setRandomDireccionBarco = (barco) => {
 export const hacerDisparo = (tablero, celda, setBarcos) => {
   const nuevoTablero = [...tablero];
   const celdaTablero = nuevoTablero[celda.nroFila].celdas[celda.nroCol];
-  if (celda.tieneBarco) {
+  if (celda.tieneBarco && !celda.tieneDisparo) {
     handleGolpeEnBarco(celda.contenido, setBarcos);
   }
   if (!celdaTablero.tieneDisparo) {
