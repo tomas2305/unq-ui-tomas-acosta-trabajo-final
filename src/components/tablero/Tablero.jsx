@@ -12,16 +12,18 @@ export default function Tablero({ tablero, onClickCelda, enabled, focus }) {
     <div className={containerClassName}>
       <div className=" ">
         {letras.map((letra) => (
-          <div className="letra" key={letra}>
-            <Typography variant="h5">{letra}</Typography>
+          <div className="letra-container" key={letra}>
+            <Typography variant="letraCelda" className="letra">{letra}</Typography>
           </div>
         ))}
       </div>
       <div>
         <div className="fila">
           {tablero.map((fila) => (
-            <div className="letra" key={fila.nroFila + 1}>
-              <Typography variant="h5">{fila.nroFila + 1}</Typography>
+            <div className="letra-container" key={fila.nroFila + 1}>
+              <Typography variant="letraCelda" className="letra">
+                {fila.nroFila + 1}
+              </Typography>
             </div>
           ))}
         </div>

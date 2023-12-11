@@ -12,10 +12,15 @@
   justify-content: center;
 }
 
-.letra {
+.letra-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 2.3rem;
-  width: 2.3rem;
+  height: var(--celda-size);
+  width: var(--celda-size);
+  font-size: 2rem;
+}
+
+.letra {
+  font-size: calc(var(--celda-size) - 0.7rem);
 }

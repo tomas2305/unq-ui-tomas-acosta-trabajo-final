@@ -12,9 +12,11 @@ export default function Home() {
   return (
     <Container className="home-page">
       <div className="game-container">
-        <Typography variant="h3" sx={{ textAlign: "center" }}>
-          {mensaje}
-        </Typography>
+        <div>
+          <Typography variant="h6" sx={{ textAlign: "center" }}>
+            {mensaje}
+          </Typography>
+        </div>
         <div className="container-space-around">
           <TableroJugador />
           <TableroEnemigo />

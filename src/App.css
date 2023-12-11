@@ -11,5 +11,36 @@
   --crucero: #7a09fa;
   --submarino: #5ac54f;
   --lancha: #db3ffd;
-  --celda-size: 2.3rem;
+  --celda-size-small: 1.3rem;
+  --celda-size-medium: 1.5rem;
+  --celda-size-large: 2rem;
+  --celda-size-xlarge: 2.3rem;
+}
+
+/* Media query para pantallas pequeñas (min-width: 401px) y (max-width: 600px) */
+@media screen and (min-width: 401px) and (max-width: 600px) {
+  :root {
+    --celda-size: var(--celda-size-small);
+  }
+}
+
+/* Media query para pantallas medianas (min-width: 601px) y (max-width: 800px) */
+@media screen and (min-width: 601px) and (max-width: 800px) {
+  :root {
+    --celda-size: var(--celda-size-medium);
+  }
+}
+
+/* Media query para pantallas grandes (min-width: 801px) y (max-width: 1000px) */
+@media screen and (min-width: 801px) and (max-width: 1000px) {
+  :root {
+    --celda-size: var(--celda-size-large);
+  }
+}
+
+/* Media query para pantallas extra grandes (min-width: 1001px) */
+@media screen and (min-width: 1001px) {
+  :root {
+    --celda-size: var(--celda-size-xlarge);
+  }
 }

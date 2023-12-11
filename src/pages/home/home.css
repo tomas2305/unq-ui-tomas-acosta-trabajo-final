@@ -4,22 +4,19 @@
 }
 
 .game-container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+  margin-top: 3rem;
   gap: 1.3rem;
 }
 
 .container-space-around {
+  margin: 1rem 0;
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  flex-wrap: wrap;
   gap: 1rem;
 }
 
 .tablero-space {
-  width: 23rem;
+  width: calc(var(--celda-size) * 11);
 }

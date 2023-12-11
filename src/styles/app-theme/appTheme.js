@@ -37,7 +37,9 @@ const AppTheme = createTheme({
   typography: {
     allVariants: {
       color: colors.fontColor,
-      fontWeight: "700",
+    },
+    letraCelda: {
+      fontWeight: 400,
     },
     fontFamily: ["Roboto", "sans-serif"].join(","),
   },
