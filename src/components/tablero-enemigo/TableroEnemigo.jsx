@@ -6,6 +6,7 @@ import { useGameContext } from "../../context/game/useGameContext";
 import { barcosDisponibles } from "../../context/game/barcos";
 import {
   colocarBarcosEnCeldasRandom,
+  esFlotaDestruida,
   getBarcosInvisibles,
   hacerDisparo,
 } from "../../services/tablero/tablero.service";
@@ -18,7 +19,7 @@ export default function TableroEnemigo() {
     setHasSetBarcosEnemigo,
     esTurnoJugador,
     setBarcosEnemigo,
-    setMensaje,
+    barcosEnemigo,
     setEsTurnoJugador,
     activo,
   } = useGameContext();
@@ -28,7 +29,6 @@ export default function TableroEnemigo() {
     if (hasSetBarcos && !hasSetBarcosEnemigo) {
       try {
         const nuevosBarcos = getBarcosInvisibles(barcosDisponibles);
-        console.log(nuevosBarcos);
         const newTablero = colocarBarcosEnCeldasRandom(
           getTableroInicial(),
           nuevosBarcos
@@ -52,14 +52,15 @@ export default function TableroEnemigo() {
     if (celda.tieneDisparo) {
       sendAlert("Esta celda ya fue seleccionada", "error");
     } else {
-      const nuevoTablero = hacerDisparo(
+      const { nuevoTablero, newBarcos } = hacerDisparo(
         tablero,
         celda,
-        setBarcosEnemigo,
-        setMensaje
+        barcosEnemigo
       );
-      setEsTurnoJugador(false);
+      setBarcosEnemigo(newBarcos);
       setTablero(nuevoTablero);
+      const turno = esFlotaDestruida(newBarcos);
+      setEsTurnoJugador(turno);
     }
   };
 

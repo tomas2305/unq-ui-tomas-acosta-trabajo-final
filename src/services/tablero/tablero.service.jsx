@@ -136,11 +136,12 @@ const setRandomDireccionBarco = (barco) => {
   barco.horizontal = randomNum === 1;
 };
 
-export const hacerDisparo = (tablero, celda, setBarcos) => {
+export const hacerDisparo = (tablero, celda, barcos) => {
+  let newBarcos = barcos;
   const nuevoTablero = [...tablero];
   const celdaTablero = nuevoTablero[celda.nroFila].celdas[celda.nroCol];
   if (celda.tieneBarco && !celda.tieneDisparo) {
-    handleGolpeEnBarco(celda.contenido, setBarcos);
+    newBarcos = getGolpeEnBarco(celda.contenido, newBarcos);
   }
   if (!celdaTablero.tieneDisparo) {
     nuevoTablero[celda.nroFila].celdas[celda.nroCol].contenido = (
@@ -148,12 +149,12 @@ export const hacerDisparo = (tablero, celda, setBarcos) => {
     );
     nuevoTablero[celda.nroFila].celdas[celda.nroCol].tieneDisparo = true;
   }
-  return nuevoTablero;
+  return { nuevoTablero, newBarcos };
 };
 
-const handleGolpeEnBarco = (barcoComp, setBarcos) => {
+const getGolpeEnBarco = (barcoComp, barcos) => {
   const barco = barcoComp.props.barco;
-  setBarcos((barcos) => quitarVidaDeBarco(barco, barcos));
+  return quitarVidaDeBarco(barco, barcos);
 };
 
 const quitarVidaDeBarco = (barco, barcos) => {
@@ -166,9 +167,9 @@ const quitarVidaDeBarco = (barco, barcos) => {
   return newBarcos;
 };
 
-export const hacerDisparoEnCeldaRandom = (tablero, setBarcos) => {
+export const hacerDisparoEnCeldaRandom = (tablero, barcos) => {
   const celdaRandom = getCeldaRandomValidaParaDisparo(tablero);
-  return hacerDisparo(tablero, celdaRandom, setBarcos);
+  return hacerDisparo(tablero, celdaRandom, barcos);
 };
 
 const getCeldaRandomValidaParaDisparo = (tablero) => {
@@ -178,9 +179,6 @@ const getCeldaRandomValidaParaDisparo = (tablero) => {
   while (celda.tieneDisparo && intentos !== 100) {
     celda = getCeldaRandomDelTablero(tablero);
     intentos++;
-  }
-  if (intentos === 100) {
-    throw new Error("Algo salio mal");
   }
   return celda;
 };
@@ -195,4 +193,8 @@ export const tiempoDelay = (milisengundos) => {
 
 export const getBarcosInvisibles = (barcos) => {
   return barcos.map((barco) => ({ ...barco, invisible: true }));
+};
+
+export const esFlotaDestruida = (barcos) => {
+  return barcos.every((b) => b.vidas === 0);
 };

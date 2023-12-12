@@ -5,6 +5,7 @@ import { useGameContext } from "../../context/game/useGameContext";
 import { getTableroInicial } from "../../utils/tablero-inicial/tablero-inicial";
 import {
   colocarBarcoEnTablero,
+  esFlotaDestruida,
   hacerDisparoEnCeldaRandom,
   tiempoDelay,
 } from "../../services/tablero/tablero.service";
@@ -16,6 +17,7 @@ export default function TableroJugador() {
     setSelectedBarco,
     hasSetBarcos,
     barcosEnemigo,
+    barcos,
     esTurnoJugador,
     setEsTurnoJugador,
     activo,
@@ -33,18 +35,19 @@ export default function TableroJugador() {
         !flotaEnemigaDestruida &&
         !recibioDisparo
       ) {
-        await tiempoDelay(1023);
-        const newTablero = hacerDisparoEnCeldaRandom(tablero, setBarcos);
-        setTablero(newTablero);
+        await tiempoDelay(1000);
+        const { nuevoTablero, newBarcos } = hacerDisparoEnCeldaRandom(
+          tablero,
+          barcos
+        );
+        setBarcos(newBarcos);
+        setTablero(nuevoTablero);
         setRecibioDisparo(true);
-        await cambiarTurno();
+        await tiempoDelay(1000);
+        const turno = !esFlotaDestruida(newBarcos);
+        setEsTurnoJugador(turno);
+        setRecibioDisparo(false);
       }
-    };
-
-    const cambiarTurno = async () => {
-      await tiempoDelay(1023);
-      setEsTurnoJugador(true);
-      setRecibioDisparo(false);
     };
 
     getDisparoDeEnemigo();
@@ -58,6 +61,7 @@ export default function TableroJugador() {
     setBarcos,
     setEsTurnoJugador,
     tablero,
+    barcos,
   ]);
 
   const colocarBarco = (celdaInicio, barco) => {
