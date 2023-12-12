@@ -35,7 +35,7 @@ export default function TableroJugador() {
         !flotaEnemigaDestruida &&
         !recibioDisparo
       ) {
-        await tiempoDelay(1000);
+        await tiempoDelay(800);
         const { nuevoTablero, newBarcos } = hacerDisparoEnCeldaRandom(
           tablero,
           barcos
@@ -43,7 +43,7 @@ export default function TableroJugador() {
         setBarcos(newBarcos);
         setTablero(nuevoTablero);
         setRecibioDisparo(true);
-        await tiempoDelay(1000);
+        await tiempoDelay(800);
         const turno = !esFlotaDestruida(newBarcos);
         setEsTurnoJugador(turno);
         setRecibioDisparo(false);

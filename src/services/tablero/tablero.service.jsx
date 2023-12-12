@@ -176,7 +176,7 @@ const getCeldaRandomValidaParaDisparo = (tablero) => {
   let celda = getCeldaRandomDelTablero(tablero);
   let intentos = 0;
 
-  while (celda.tieneDisparo && intentos !== 100) {
+  while (celda.tieneDisparo && intentos !== 500) {
     celda = getCeldaRandomDelTablero(tablero);
     intentos++;
   }
