@@ -1,8 +1,25 @@
-# React + Vite
+# Batalla naval - UNQ - UI - TP FINAL
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Información
 
-Currently, two official plugins are available:
+Juego de batalla naval programado en React JS. Estilos con Material UI.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Se compone de:
+
+- Un tablero de 10x10 por jugador.
+- 4 barcos:
+  - 1 portaaviones (5 casillas).
+  - 1 crucero (4 casillas).
+  - 1 submarino (3 casillas).
+  - 1 lancha (2 casillas).
+
+## Instalación
+
+- Descargar el proyecto
+- Abrir una consola en el proyecto
+- Instalar dependencia necesarias con **npm install**
+- Levantar el proyecto con **npm run dev**
+- Abrir en el navegador la url Local que proporciona Vite.
+- A jugar!
+
+
