@@ -44,3 +44,15 @@
     --celda-size: var(--celda-size-xlarge);
   }
 }
+
+@keyframes cambiarColorBorde {
+  0% {
+    border-color: red;
+  }
+  50% {
+    border-color: black;
+  }
+  100% {
+    border-color: red;
+  }
+}
