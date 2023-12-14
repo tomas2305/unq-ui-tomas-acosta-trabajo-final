@@ -20,3 +20,8 @@
 .tablero-space {
   width: calc(var(--celda-size) * 11);
 }
+
+.indicador-barcos {
+  display: flex;
+  justify-content: space-between;
+}

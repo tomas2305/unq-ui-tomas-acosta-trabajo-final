@@ -4,6 +4,7 @@
   justify-content: center;
   width: var(--celda-size);
   height: var(--celda-size);
+  transition: border 0.5s, color 0.5s;
 }
 
 .disparo-focus {

@@ -13,6 +13,10 @@ Se compone de:
   - 1 submarino (3 casillas).
   - 1 lancha (2 casillas).
 
+## Extras
+
+- Diseño responsive.
+
 ## Instalación
 
 - Descargar el proyecto
@@ -21,5 +25,3 @@ Se compone de:
 - Levantar el proyecto con **npm run dev**
 - Abrir en el navegador la url Local que proporciona Vite.
 - A jugar!
-
-

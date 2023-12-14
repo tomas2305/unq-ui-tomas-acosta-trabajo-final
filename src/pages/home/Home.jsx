@@ -5,6 +5,7 @@ import SelectBarcos from "../../components/selectBarcos/SelectBarcos";
 import TableroEnemigo from "../../components/tablero-enemigo/TableroEnemigo";
 import { useGameContext } from "../../context/game/useGameContext";
 import BarcosIndicador from "../../components/barcos/barcosIndicador/BarcosIndicador";
+import { InfoBarco } from "../../components/info-barco/IndicadorBarco";
 
 export default function Home() {
   const { mensaje, barcos, barcosEnemigo } = useGameContext();
@@ -22,8 +23,9 @@ export default function Home() {
           <TableroEnemigo />
         </div>
         <div className="container-space-around">
-          <div className="tablero-space">
+          <div className="tablero-space indicador-barcos">
             <BarcosIndicador barcos={barcos} />
+            <InfoBarco />
           </div>
           <div className="tablero-space">
             <BarcosIndicador barcos={barcosEnemigo} />

@@ -4,7 +4,7 @@ import { useGameContext } from "../../context/game/useGameContext";
 import { useEffect, useState } from "react";
 
 export default function TurnBarcoBtn() {
-  const { selectedBarco } = useGameContext();
+  const { selectedBarco, setSelectedBarco } = useGameContext();
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
@@ -13,7 +13,10 @@ export default function TurnBarcoBtn() {
 
   const handleTurn = () => {
     if (selectedBarco) {
-      selectedBarco.horizontal = !selectedBarco.horizontal;
+      setSelectedBarco((selected) => ({
+        ...selected,
+        horizontal: !selected.horizontal,
+      }));
     }
   };
 
