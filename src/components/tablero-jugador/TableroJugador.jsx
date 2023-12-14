@@ -74,8 +74,6 @@ export default function TableroJugador() {
       );
       setBarcos((barcos) => [...barcos, barco]);
       setSelectedBarco(null);
-      console.log(barco);
-      console.log(selectedBarco);
       setTablero(nuevoTablero);
       sendAlert("Se coloco corretamente", "success");
     } catch (error) {
